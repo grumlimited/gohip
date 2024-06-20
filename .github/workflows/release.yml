@@ -7,9 +7,7 @@ on:
       - 'latest'
 
 env:
-  DEB_PKG_NAME: gohip-${{ github.ref }}-x86_64.deb
-  RPM_PKG_NAME: gohip-${{ github.ref }}-1.x86_64.rpm
-  ARCH_PKG_NAME: gohip-bin-${{ github.ref }}-1-x86_64.pkg.tar.zst
+  RELEASE_VERSION: $(echo ${{ github.ref }} | tr -d 'refs/tags/v')
 
 jobs:
   build:
@@ -57,7 +55,6 @@ jobs:
       - name: Create Debian package
         env:
           DESTDIR: '/tmp/gohip-deb' # keep path absolute - meson has issues with relative paths on CI
-          RELEASE_VERSION: $(echo ${{ github.ref }} | tr -d 'refs/tags/v')
         run: |
           mkdir -p $DESTDIR
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} RELEASE_VERSION=$RELEASE_VERSION DESTDIR=$DESTDIR make debian-pkg
@@ -65,8 +62,6 @@ jobs:
 
       - name: Upload Debian release
         uses: softprops/action-gh-release@v1
-        env:
-          RELEASE_VERSION: $(echo ${{ github.ref }} | tr -d 'refs/tags/v')
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
