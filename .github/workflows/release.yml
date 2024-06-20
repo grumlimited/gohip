@@ -31,6 +31,7 @@ jobs:
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o gohip-${{ matrix.goos }}-${{ matrix.goarch }}
           RELEASE_VERSION=$(echo ${{ github.ref }} | tr -d 'refs/tags/v')
 
+
   release:
     runs-on: ubuntu-latest
     needs: [ build ]
