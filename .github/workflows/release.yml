@@ -50,18 +50,3 @@ jobs:
           asset_name: gohip-linux-amd64
           asset_path: ./gohip-linux-amd64
           asset_content_type: application/octet-stream
-
-      - name: Create Debian package
-        env:
-          DESTDIR: '/tmp/gohip-deb' # keep path absolute - meson has issues with relative paths on CI
-        run: |
-          mkdir -p $DESTDIR
-          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} RELEASE_VERSION=1.0.0 DESTDIR=$DESTDIR make debian-pkg
-
-      - name: Upload Debian release
-        uses: softprops/action-gh-release@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          files: |
-            ${{ env.DEB_PKG_NAME }}
-            ${{ env.DEB_PKG_NAME }}.md5sum
