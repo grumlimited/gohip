@@ -57,6 +57,7 @@ jobs:
           DESTDIR: '/tmp/gohip-deb' # keep path absolute - meson has issues with relative paths on CI
         run: |
           mkdir -p $DESTDIR
+          printenv|sort
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} RELEASE_VERSION=$RELEASE_VERSION DESTDIR=$DESTDIR make debian-pkg
           find $DESTDIR
 
