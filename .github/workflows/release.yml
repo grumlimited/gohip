@@ -64,5 +64,5 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            gohip-$RELEASE_VERSION-x86_64.deb
-            gohip-$RELEASE_VERSION-x86_64.deb.md5sum
+            gohip-*-x86_64.deb
+            gohip-*-x86_64.deb.md5sum
