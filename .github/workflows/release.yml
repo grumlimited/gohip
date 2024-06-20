@@ -57,16 +57,18 @@ jobs:
       - name: Create Debian package
         env:
           DESTDIR: '/tmp/gohip-deb' # keep path absolute - meson has issues with relative paths on CI
+          RELEASE_VERSION: $(echo ${{ github.ref }} | tr -d 'refs/tags/v')
         run: |
           mkdir -p $DESTDIR
-          RELEASE_VERSION=$(echo ${{ github.ref }} | tr -d 'refs/tags/v')
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} RELEASE_VERSION=$RELEASE_VERSION DESTDIR=$DESTDIR make debian-pkg
           find $DESTDIR
 
       - name: Upload Debian release
         uses: softprops/action-gh-release@v1
+        env:
+          RELEASE_VERSION: $(echo ${{ github.ref }} | tr -d 'refs/tags/v')
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            ${{ env.DEB_PKG_NAME }}
-            ${{ env.DEB_PKG_NAME }}.md5sum
+            gohip-${RELEASE_VERSION}-x86_64.deb
+            gohip-${RELEASE_VERSION}-x86_64.deb.md5sum
