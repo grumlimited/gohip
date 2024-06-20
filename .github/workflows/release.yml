@@ -89,4 +89,3 @@ jobs:
           files: |
             gohip-*-1.x86_64.rpm
             gohip-*-1.x86_64.rpm.md5sum
-
