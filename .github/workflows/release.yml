@@ -80,7 +80,7 @@ jobs:
 
       - name: Create CentOS 8 package
         run: |
-          wget https://github.com/grumlimited/gohip/releases/download/${{ github.ref }}/gohip-$RELEASE_VERSION-x86_64.deb -O gohip-$RELEASE_VERSION-x86_64.deb
+          wget https://github.com/grumlimited/gohip/releases/download/v$RELEASE_VERSION/gohip-$RELEASE_VERSION-x86_64.deb -O gohip-$RELEASE_VERSION-x86_64.deb
 
           alien -r -k --scripts --target=x86_64 gohip-$RELEASE_VERSION-x86_64.deb
           md5sum gohip-$RELEASE_VERSION-1.x86_64.rpm >> gohip-$RELEASE_VERSION-1.x86_64.rpm
